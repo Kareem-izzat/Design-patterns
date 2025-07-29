@@ -2,7 +2,8 @@ package org.example.events;
 
 import java.time.LocalDateTime;
 
-public class ReminderEvent implements Event{
+
+public class ReminderEvent implements Event {
     private final int id;
     private final LocalDateTime timestamp;
     private final String reminderMessage;
@@ -23,8 +24,13 @@ public class ReminderEvent implements Event{
     }
 
     @Override
-    public String getType() {
-        return "ReminderEvent";
+    public EventType getType() {
+        return EventType.REMINDER;  // Use enum instead of String
+    }
+
+    @Override
+    public Priority getPriority() {
+        return Priority.MEDIUM;     // Reminder events have medium priority
     }
 
     public String getReminderMessage() {
@@ -37,6 +43,8 @@ public class ReminderEvent implements Event{
                 "id=" + id +
                 ", timestamp=" + timestamp +
                 ", reminderMessage='" + reminderMessage + '\'' +
+                ", priority=" + getPriority() +
+                ", type=" + getType() +
                 '}';
     }
 }
