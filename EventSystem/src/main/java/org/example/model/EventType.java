@@ -1,0 +1,12 @@
+package org.example.model;
+
+
+// enum to assign a type to an event
+public enum EventType {
+    NEW_TASK , // A NEW TASK HAS BEEN ADDED
+    TASK_COMPLETED // THE TASK IS DONE
+    , REMINDER // THIS IS A SCHEDULED REMINDING EVENT
+    , SCHEDULED_EVENT // AS THE NAME SUGGEST
+    , STATUS_UPDATE //
+    , HEARTBEAT_EVENT // AN EVENT THAT IS FIRED FOR A PREDEFINED TIME INTERVAL
+}
