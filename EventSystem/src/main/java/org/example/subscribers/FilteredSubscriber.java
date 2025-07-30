@@ -6,10 +6,12 @@ import org.example.filters.EventFilter;
 public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     private final int id;
     private final EventFilter<T> filter;
+    private final String name;
 
-    public FilteredSubscriber(int id, EventFilter<T> filter) {
+    public FilteredSubscriber(int id, String name,EventFilter<T> filter) {
         this.id = id;
         this.filter = filter;
+        this.name = name;
     }
     @Override
     public int getId() {
@@ -25,5 +27,9 @@ public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     @Override
     public boolean isInterestedIn(T event) {
         return filter.matches(event);
+    }
+    @Override
+    public String getName() {
+        return name;
     }
 }

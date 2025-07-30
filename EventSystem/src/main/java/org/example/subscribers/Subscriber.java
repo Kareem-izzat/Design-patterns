@@ -6,4 +6,5 @@ public interface Subscriber<T extends Event> {
     int getId();
     void notify(T event);
     boolean isInterestedIn(T event);
+    String getName();
 }
