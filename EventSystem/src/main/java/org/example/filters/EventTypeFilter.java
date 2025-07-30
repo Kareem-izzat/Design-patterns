@@ -12,6 +12,6 @@ public class EventTypeFilter<T extends Event> implements EventFilter<T> {
 
     @Override
     public boolean matches(T event) {
-        return event.getType().equals(eventType);
+        return event.getType() == (eventType);
     }
 }

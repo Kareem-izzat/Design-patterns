@@ -1,6 +1,6 @@
 package org.example.schedule;
 
-public enum SchduleType {
+public enum ScheduleType {
     ONETIME,
     PERIODIC
 }

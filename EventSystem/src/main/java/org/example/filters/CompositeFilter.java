@@ -6,7 +6,7 @@ import java.util.List;
 
 
 // this is a filter to apply more than one type of filter using streams
-public class CompositeFilter<T> implements EventFilter<T>{
+public class CompositeFilter<T extends Event> implements EventFilter<T >{
     private final List<EventFilter<T>> filters;
     public CompositeFilter(List<EventFilter<T>> filters) {
         this.filters = filters;

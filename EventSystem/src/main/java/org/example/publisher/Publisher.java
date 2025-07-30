@@ -5,5 +5,5 @@ import org.example.subscribers.Subscriber;
 
 public interface Publisher {
     void publish(Event event);
-    <T extends Event> void subscribe(Subscriber<T> subscriber);
+    void subscribe(Subscriber<? extends Event> subscriber);
 }

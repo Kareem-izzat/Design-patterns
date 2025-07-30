@@ -5,22 +5,23 @@ import org.example.subscribers.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
+public class EventPublisher implements Publisher {
 
-public class EventPublisher implements Publisher{
-    private final List<Subscriber<? extends Event>> subscribers = new ArrayList<>();
-    // synchronized is used to ensure safety when working with threads
+    private final List<Subscriber<Event>> subscribers = new ArrayList<>();
+
+
     @Override
-    public synchronized <T extends Event> void subscribe(Subscriber<T> subscriber) {
-        subscribers.add(subscriber);
+    public synchronized void subscribe(Subscriber<? extends Event> subscriber) {// Safe cast because Subscriber<T extends Event> can be treated as Subscriber<Event>
+        @SuppressWarnings("unchecked")
+        Subscriber<Event> s = (Subscriber<Event>) subscriber;
+        subscribers.add(s);
     }
+
     @Override
     public synchronized void publish(Event event) {
-        for (Subscriber<? extends Event> subscriber : subscribers) {
-            @SuppressWarnings("unchecked")
-            Subscriber<Event> sub = (Subscriber<Event>) subscriber;
-
-            if (sub.isInterestedIn(event)) {
-                sub.notify(event);
+        for (Subscriber<Event> subscriber : subscribers) {
+            if (subscriber.isInterestedIn(event)) {
+                subscriber.notify(event);
             }
         }
     }

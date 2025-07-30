@@ -4,9 +4,9 @@ import org.example.events.Event;
 
 public class ScheduledEvent <T extends Event>{
     private final T event ;
-    private final SchduleType type;
+    private final ScheduleType type;
     private final long period;
-    public ScheduledEvent(T event, SchduleType type, long period) {
+    public ScheduledEvent(T event, ScheduleType type, long period) {
         this.event = event;
         this.type = type;
         this.period = period;
@@ -16,7 +16,7 @@ public class ScheduledEvent <T extends Event>{
         return period;
     }
 
-    public SchduleType getType() {
+    public ScheduleType getType() {
         return type;
     }
 

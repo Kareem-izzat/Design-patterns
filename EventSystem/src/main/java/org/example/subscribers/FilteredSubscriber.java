@@ -21,7 +21,7 @@ public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
 
     @Override
     public void notify(T event) {
-        System.out.println("Subscriber " + id + " received event: " + event);
+        System.out.println("Subscriber " + id + " (" + name + ") received event: " + event);
     }
 
     @Override
