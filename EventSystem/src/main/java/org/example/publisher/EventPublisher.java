@@ -32,7 +32,12 @@ public class EventPublisher implements Publisher {
     public synchronized void unsubscribe(Subscriber<? extends Event> subscriber) {
         @SuppressWarnings("unchecked")
         Subscriber<Event> s = (Subscriber<Event>) subscriber;
-        subscribers.remove(s);
+        if (subscribers.contains(s)) {
+            subscribers.remove(s);
+        }else {
+            System.out.println("Subscriber not found");
+        }
+
     }
     @Override
     public synchronized void clearSubscribers() {
@@ -41,6 +46,10 @@ public class EventPublisher implements Publisher {
 
     @Override
     public synchronized void publish(Event event) {
+        if (subscribers.isEmpty()) {
+            System.out.println("Warning: No subscribers to notify for event: " + event);
+            return;
+        }
         eventHistory.add(event);
         for (Subscriber<Event> subscriber : subscribers) {
             if (subscriber.isInterestedIn(event)) {
