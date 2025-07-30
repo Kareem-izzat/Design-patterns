@@ -7,11 +7,20 @@ public class HeartBeatNotification implements Event {
     private final LocalDateTime timestamp;
     private final int sequenceNumber;
     private final String componentName;
+    private final Priority priority;
+    private final Long period;
 
-    public HeartBeatNotification(int sequenceNumber, String componentName) {
+    public HeartBeatNotification(int sequenceNumber, String componentName,Priority priority,Long period) {
         this.timestamp = LocalDateTime.now();
         this.sequenceNumber = sequenceNumber;
         this.componentName = componentName;
+        this.period = period;
+        if (priority == null) {
+            this.priority = Priority.LOW;
+        }
+        else {
+            this.priority = priority;
+        }
     }
 
     @Override
@@ -26,7 +35,7 @@ public class HeartBeatNotification implements Event {
 
     @Override
     public Priority getPriority() {
-        return Priority.LOW;
+        return priority;
     }
 
     public int getSequenceNumber() {
@@ -34,6 +43,10 @@ public class HeartBeatNotification implements Event {
     }
     public String getComponentName() {
         return componentName;
+    }
+
+    public Long getPeriod() {
+        return period;
     }
 
     @Override

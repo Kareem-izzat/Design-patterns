@@ -2,6 +2,9 @@ package org.example;
 
 import org.example.events.*;
 import org.example.filters.*;
+import org.example.schedule.EventScheduler;
+import org.example.schedule.ScheduleType;
+import org.example.schedule.ScheduledEvent;
 import org.example.subscribers.*;
 import org.example.publisher.*;
 import java.time.LocalDateTime;
@@ -12,4 +15,5 @@ public class Main {
     public static void main(String[] args) {
 
     }
-}
+    }
+

@@ -7,11 +7,17 @@ public class ReminderEvent implements Event {
     private final int id;
     private final LocalDateTime timestamp;
     private final String reminderMessage;
+    private final Priority priority;
 
-    public ReminderEvent(int id, String reminderMessage) {
+    public ReminderEvent(int id, String reminderMessage,Priority priority) {
         this.id = id;
         this.timestamp = LocalDateTime.now();
         this.reminderMessage = reminderMessage;
+        if (priority == null) {
+            this.priority = Priority.MEDIUM;
+        } else {
+            this.priority = priority;
+        }
     }
 
     public int getId() {
@@ -30,7 +36,7 @@ public class ReminderEvent implements Event {
 
     @Override
     public Priority getPriority() {
-        return Priority.MEDIUM;     // Reminder events have medium priority
+        return priority;     // Reminder events have medium priority
     }
 
     public String getReminderMessage() {

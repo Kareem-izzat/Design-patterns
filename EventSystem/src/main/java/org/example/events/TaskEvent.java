@@ -7,11 +7,17 @@ public class TaskEvent implements Event {
     private final LocalDateTime timestamp;
     private final int taskId;
     private final String description;
+    private final Priority priority;
 
-    public TaskEvent(int taskId, String description) {
+    public TaskEvent(int taskId, String description, Priority priority) {
         this.timestamp = LocalDateTime.now();
         this.taskId = taskId;
         this.description = description;
+        if (priority == null) {
+            this.priority = Priority.HIGH;
+        }else  {
+            this.priority = priority;
+        }
     }
 
     @Override
@@ -26,7 +32,7 @@ public class TaskEvent implements Event {
 
     @Override
     public Priority getPriority() {
-        return Priority.HIGH;
+        return priority;
     }
 
     public int getTaskId() {

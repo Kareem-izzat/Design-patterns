@@ -18,9 +18,9 @@ public class EventScheduler {
         Runnable task = () -> publisher.publish(scheduledEvent.getEvent());
 
         if (scheduledEvent.getType() == ScheduleType.ONETIME) {
-            executor.schedule(task, scheduledEvent.getPeriod(), TimeUnit.SECONDS);
+            executor.schedule(task, scheduledEvent.getPeriod(), TimeUnit.MILLISECONDS);
         } else if (scheduledEvent.getType() == ScheduleType.PERIODIC) {
-            executor.scheduleAtFixedRate(task, 0, scheduledEvent.getPeriod(), TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(task, 0, scheduledEvent.getPeriod(), TimeUnit.MILLISECONDS);
         }
     }
     public void shutdown() {
