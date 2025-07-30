@@ -32,4 +32,12 @@ public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     public String getName() {
         return name;
     }
+    @Override
+    public String toString() {
+        return "FilteredSubscriber{" +
+                "id=" + id +
+                ", filter=" + filter +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

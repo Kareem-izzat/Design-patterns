@@ -6,10 +6,12 @@ public class HeartBeatNotification implements Event {
 
     private final LocalDateTime timestamp;
     private final int sequenceNumber;
+    private final String componentName;
 
-    public HeartBeatNotification(int sequenceNumber) {
+    public HeartBeatNotification(int sequenceNumber, String componentName) {
         this.timestamp = LocalDateTime.now();
         this.sequenceNumber = sequenceNumber;
+        this.componentName = componentName;
     }
 
     @Override
@@ -29,6 +31,9 @@ public class HeartBeatNotification implements Event {
 
     public int getSequenceNumber() {
         return sequenceNumber;
+    }
+    public String getComponentName() {
+        return componentName;
     }
 
     @Override
