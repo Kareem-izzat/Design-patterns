@@ -1,9 +1,9 @@
 package org.example.filters;
 
-import jdk.jfr.EventType;
+import org.example.events.EventType;
 import org.example.events.Event;
 
-public class EventTypeFilter implements EventFilter {
+public class EventTypeFilter<T extends Event> implements EventFilter<T> {
     private final EventType eventType;
 
     public EventTypeFilter(EventType eventType) {
@@ -11,7 +11,7 @@ public class EventTypeFilter implements EventFilter {
     }
 
     @Override
-    public boolean matches(Event event) {
+    public boolean matches(T event) {
         return event.getType().equals(eventType);
     }
 }

@@ -4,7 +4,7 @@ import org.example.events.Event;
 
 import java.time.LocalDateTime;
 
-public class TimeFilter implements EventFilter {
+public class TimeFilter <T extends Event> implements EventFilter <T>{
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
 
@@ -14,7 +14,7 @@ public class TimeFilter implements EventFilter {
     }
 
     @Override
-    public boolean matches(Event event) {
+    public boolean matches(T event) {
         LocalDateTime eventTime = event.getTimestamp();
         return !eventTime.isBefore(startTime) && !eventTime.isAfter(endTime);
     }

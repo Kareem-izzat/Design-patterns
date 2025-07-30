@@ -6,14 +6,14 @@ import java.util.List;
 
 
 // this is a filter to apply more than one type of filter using streams
-public class CompositeFilter implements EventFilter{
-    private final List<EventFilter> filters;
-    public CompositeFilter(List<EventFilter> filters) {
+public class CompositeFilter<T> implements EventFilter<T>{
+    private final List<EventFilter<T>> filters;
+    public CompositeFilter(List<EventFilter<T>> filters) {
         this.filters = filters;
     }
 
     @Override
-    public boolean matches(Event event) {
+    public boolean matches(T event) {
 
         return filters.stream().allMatch(f -> f.matches(event));
     }
