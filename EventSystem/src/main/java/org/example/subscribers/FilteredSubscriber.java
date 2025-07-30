@@ -5,9 +5,9 @@ import org.example.filters.EventFilter;
 // this is a subscriber that will take an event filter and filter based on it
 public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     private final int id;
-    private final EventFilter filter;
+    private final EventFilter<T> filter;
 
-    public FilteredSubscriber(int id, EventFilter filter) {
+    public FilteredSubscriber(int id, EventFilter<T> filter) {
         this.id = id;
         this.filter = filter;
     }
