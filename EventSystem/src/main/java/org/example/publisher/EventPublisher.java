@@ -1,6 +1,8 @@
 package org.example.publisher;
 
+
 import org.example.events.Event;
+import org.example.events.EventType;
 import org.example.subscribers.Subscriber;
 
 import java.time.LocalDateTime;
@@ -36,8 +38,15 @@ public class EventPublisher implements Publisher {
         return eventHistory;
     }
     public List<Event> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
-        Stream<Event> eventStream = eventHistory.stream()
-                .filter(event-> !event.getTimestamp().isBefore(start) && !event.getTimestamp().isAfter(end));
-        return eventStream.collect(Collectors.toList());
+
+        return  eventHistory.stream()
+                .filter(event-> !event.getTimestamp().isBefore(start) && !event.getTimestamp().isAfter(end))
+                .collect(Collectors.toList());
     }
+    public List<Event> getEventByType(EventType eventType) {
+        return eventHistory.stream()
+                .filter(event -> event.getType() == eventType)
+                .collect(Collectors.toList());
+    }
+
 }
