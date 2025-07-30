@@ -6,4 +6,7 @@ import org.example.subscribers.Subscriber;
 public interface Publisher {
     void publish(Event event);
     void subscribe(Subscriber<? extends Event> subscriber);
+    void unsubscribe(Subscriber<? extends Event> subscriber);
+    void clearSubscribers();
+
 }

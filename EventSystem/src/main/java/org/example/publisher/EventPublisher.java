@@ -13,16 +13,30 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class EventPublisher implements Publisher {
-
+    private static final EventPublisher instance = new EventPublisher();
     private final List<Subscriber<Event>> subscribers = new ArrayList<>();
     private final List<Event> eventHistory = new CopyOnWriteArrayList<>(); //this is a safe list to store
     //history in a threading enviroment
+    public static EventPublisher getInstance() {
+        return instance;
+    }
 
+    private EventPublisher() {}
     @Override
-    public synchronized void subscribe(Subscriber<? extends Event> subscriber) {// Safe cast because Subscriber<T extends Event> can be treated as Subscriber<Event>
+    public synchronized void subscribe(Subscriber<? extends Event> subscriber) {
         @SuppressWarnings("unchecked")
         Subscriber<Event> s = (Subscriber<Event>) subscriber;
         subscribers.add(s);
+    }
+    @Override
+    public synchronized void unsubscribe(Subscriber<? extends Event> subscriber) {
+        @SuppressWarnings("unchecked")
+        Subscriber<Event> s = (Subscriber<Event>) subscriber;
+        subscribers.remove(s);
+    }
+    @Override
+    public synchronized void clearSubscribers() {
+        subscribers.clear();
     }
 
     @Override

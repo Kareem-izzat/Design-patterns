@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Publisher publisher = new EventPublisher();
+        Publisher publisher = EventPublisher.getInstance();
 
         // Subscriber that listens to all heartbeat events
         EventFilter<Event> heartbeatFilter = new EventTypeFilter<>(EventType.HEARTBEAT);
