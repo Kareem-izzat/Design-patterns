@@ -26,6 +26,9 @@ public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
 
     @Override
     public boolean isInterestedIn(T event) {
+        if (filter == null) {
+            return true;
+        }
         return filter.matches(event);
     }
     @Override

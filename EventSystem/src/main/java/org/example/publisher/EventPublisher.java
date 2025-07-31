@@ -15,10 +15,14 @@ import java.util.stream.Stream;
 public class EventPublisher implements Publisher {
     private static final EventPublisher instance = new EventPublisher();
     private final List<Subscriber<Event>> subscribers = new ArrayList<>();
-    private final List<Event> eventHistory = new CopyOnWriteArrayList<>(); //this is a safe list to store
+    private final List<LoggedEvent> eventHistory = new CopyOnWriteArrayList<>(); //this is a safe list to store
     //history in a threading enviroment
     public static EventPublisher getInstance() {
         return instance;
+    }
+
+    public List<Subscriber<Event>> getSubscribers() {
+        return subscribers;
     }
 
     private EventPublisher() {}
@@ -43,33 +47,50 @@ public class EventPublisher implements Publisher {
     public synchronized void clearSubscribers() {
         subscribers.clear();
     }
+    public synchronized int getSubscriberCount() {
+        return subscribers.size();
+    }
+    public synchronized  void clearHistory(){
+        eventHistory.clear();
+    }
 
     @Override
     public synchronized void publish(Event event) {
-        if (subscribers.isEmpty()) {
-            System.out.println("Warning: No subscribers to notify for event: " + event);
-            return;
-        }
-        eventHistory.add(event);
-        for (Subscriber<Event> subscriber : subscribers) {
-            if (subscriber.isInterestedIn(event)) {
-                subscriber.notify(event);
+        int notifiedCount = 0;
+        if (!subscribers.isEmpty()) {
+            for (Subscriber<Event> subscriber : subscribers) {
+                if (subscriber.isInterestedIn(event)) {
+                    subscriber.notify(event);
+                    notifiedCount++;
+                }
             }
+        } else {
+            System.out.println("[LOG] Event published but no subscribers to notify: " + event);
         }
+
+        LoggedEvent loggedEvent = new LoggedEvent(event, notifiedCount);
+        eventHistory.add(loggedEvent);
+
+        System.out.println("[LOG] Event published: " + event + ", Subscribers notified: " + notifiedCount);
     }
-    public List<Event> getEventHistory() {
+    public List<LoggedEvent> getEventHistory() {
         return eventHistory;
     }
-    public List<Event> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
+    public List<LoggedEvent> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
 
         return  eventHistory.stream()
-                .filter(event-> !event.getTimestamp().isBefore(start) && !event.getTimestamp().isAfter(end))
+                .filter(log-> !log.getEvent().getTimestamp().isBefore(start) && !log.getEvent().getTimestamp().isAfter(end))
                 .collect(Collectors.toList());
     }
-    public List<Event> getEventByType(EventType eventType) {
+    public List<LoggedEvent> getEventByType(EventType eventType) {
         return eventHistory.stream()
-                .filter(event -> event.getType() == eventType)
+                .filter(Log -> Log.getEvent().getType() == eventType)
                 .collect(Collectors.toList());
+    }
+    public void printHistory() {
+        for (LoggedEvent event : eventHistory) {
+            System.out.println(event);
+        }
     }
 
 }

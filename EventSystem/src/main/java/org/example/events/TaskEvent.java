@@ -53,4 +53,5 @@ public class TaskEvent implements Event {
                 ", type=" + getType() +
                 '}';
     }
+
 }
