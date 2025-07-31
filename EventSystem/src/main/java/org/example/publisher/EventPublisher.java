@@ -61,22 +61,23 @@ public class EventPublisher implements Publisher {
 
     @Override
     public synchronized void publish(Event event) {
-        int notifiedCount = 0;
+
+        List<Subscriber<Event>> notifiedSubscribers = new ArrayList<>();
         if (!subscribers.isEmpty()) {
             for (Subscriber<Event> subscriber : subscribers) {
                 if (subscriber.isInterestedIn(event)) {
                     subscriber.notify(event);
-                    notifiedCount++;
+                    notifiedSubscribers.add(subscriber);
                 }
             }
         } else {
             logger.warning("No subscribers to notify for event: " + event);
         }
 
-        LoggedEvent loggedEvent = new LoggedEvent(event, notifiedCount);
+        LoggedEvent loggedEvent = new LoggedEvent(event, notifiedSubscribers);
         eventHistory.add(loggedEvent);
 
-        logger.info("Event published: " + event + " to " + notifiedCount + " subscribers");
+        logger.info("Event published: " + event + " to " + notifiedSubscribers.size() + " subscribers");
     }
     public List<LoggedEvent> getEventHistory() {
         return eventHistory;
