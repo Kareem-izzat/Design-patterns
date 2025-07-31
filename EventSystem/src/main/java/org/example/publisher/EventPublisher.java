@@ -11,12 +11,17 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.logging.Logger;
+
 
 public class EventPublisher implements Publisher {
+
     private static final EventPublisher instance = new EventPublisher();
     private final List<Subscriber<Event>> subscribers = new ArrayList<>();
     private final List<LoggedEvent> eventHistory = new CopyOnWriteArrayList<>(); //this is a safe list to store
     //history in a threading enviroment
+    private static final Logger logger = Logger.getLogger(EventPublisher.class.getName());
+    // to add real logging instead of prints
     public static EventPublisher getInstance() {
         return instance;
     }
@@ -65,13 +70,15 @@ public class EventPublisher implements Publisher {
                 }
             }
         } else {
-            System.out.println("[LOG] Event published but no subscribers to notify: " + event);
+            logger.warning("No subscribers to notify for event: " + event);
+
+
         }
 
         LoggedEvent loggedEvent = new LoggedEvent(event, notifiedCount);
         eventHistory.add(loggedEvent);
 
-        System.out.println("[LOG] Event published: " + event + ", Subscribers notified: " + notifiedCount);
+        logger.info("Event published: " + event + " to " + notifiedCount + " subscribers");
     }
     public List<LoggedEvent> getEventHistory() {
         return eventHistory;

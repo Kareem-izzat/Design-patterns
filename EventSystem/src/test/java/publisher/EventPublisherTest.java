@@ -79,6 +79,7 @@ public class EventPublisherTest {
         List<LoggedEvent> listHeart = eventPublisher.getEventByType(EventType.HEARTBEAT);// only one
         List<LoggedEvent> listReminder = eventPublisher.getEventByType(EventType.REMINDER); // zero
 
+
         assertEquals(2, listTask.size());
         assertEquals(1, listHeart.size());
         assertEquals(0, listReminder.size());
