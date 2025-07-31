@@ -71,8 +71,6 @@ public class EventPublisher implements Publisher {
             }
         } else {
             logger.warning("No subscribers to notify for event: " + event);
-
-
         }
 
         LoggedEvent loggedEvent = new LoggedEvent(event, notifiedCount);
