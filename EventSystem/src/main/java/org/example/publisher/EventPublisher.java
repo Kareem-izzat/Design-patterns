@@ -22,6 +22,7 @@ public class EventPublisher implements Publisher {
     //history in a threading enviroment
     private static final Logger logger = Logger.getLogger(EventPublisher.class.getName());
     // to add real logging instead of prints
+    // made into singeltoon pattern because we only need one publisher also for thread safety
     public static EventPublisher getInstance() {
         return instance;
     }

@@ -3,10 +3,12 @@ package publisher;
 import org.example.events.*;
 import org.example.publisher.EventPublisher;
 import org.example.publisher.LoggedEvent;
+import org.example.publisher.Publisher;
 import org.example.subscribers.FilteredSubscriber;
 import org.example.subscribers.Subscriber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import subscribers.TestSubscriber;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -89,6 +91,17 @@ public class EventPublisherTest {
         Event e1 = new TaskEvent(1, null, null);
         eventPublisher.publish(e1);
         assertEquals(0, eventPublisher.getSubscribers().size());
+    }
+    @Test
+    void puplishShoudbeReveivedForSubscriberTest(){
+       // we will send a event and check if the sub received it
+        TestSubscriber<Event> testSubscriber = new TestSubscriber<>();
+        eventPublisher.subscribe(testSubscriber);
+        Event event = new TaskEvent(1,"test task", null);
+        eventPublisher.publish(event);
+        // check if it received
+        assertTrue(testSubscriber.hasReceivedEvent());
+
     }
 
 }
