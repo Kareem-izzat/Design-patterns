@@ -2,6 +2,9 @@ package org.example.events;
 
 public class EventFactory {
     public static Event createEvent(EventType eventType , Object ... params) {
+        if (eventType == null) {
+            throw new IllegalArgumentException("EventType cannot be null");
+        }
         switch (eventType) {
             case TASK :
                 // it will receive int taskId, String description, Priority priority
