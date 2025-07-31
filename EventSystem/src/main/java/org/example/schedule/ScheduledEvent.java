@@ -1,7 +1,7 @@
 package org.example.schedule;
 
 import org.example.events.Event;
-
+//  this is also a wraper function for the scheduled event
 public class ScheduledEvent <T extends Event>{
     private final T event ;
     private final ScheduleType type;

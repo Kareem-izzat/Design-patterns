@@ -4,7 +4,7 @@ import org.example.events.Event;
 import org.example.subscribers.Subscriber;
 
 import java.util.List;
-
+// this is a wrapper class that take each events and store it with the subscribers for it
 public class LoggedEvent {
     private final Event event;
     private final List<Subscriber<Event>> subscribers;

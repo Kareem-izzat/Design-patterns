@@ -14,6 +14,7 @@ public class EventScheduler {
     public EventScheduler(Publisher publisher) {
         this.publisher = publisher;
     }
+    // this function will schedule every event based on if it is periodic or not
     public <T extends Event> void schedule(ScheduledEvent<T> scheduledEvent) {
         Runnable task = () -> publisher.publish(scheduledEvent.getEvent());
 

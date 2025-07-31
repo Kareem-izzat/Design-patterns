@@ -5,7 +5,7 @@ import org.example.filters.EventFilter;
 // this is a subscriber that will take an event filter and filter based on it
 public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     private final int id;
-    private final EventFilter<T> filter;
+    private final EventFilter<T> filter; //subscriber will take the efilter he want to have
     private final String name;
 
     public FilteredSubscriber(int id, String name,EventFilter<T> filter) {
@@ -23,7 +23,8 @@ public class FilteredSubscriber<T extends Event> implements Subscriber<T>{
     public void notify(T event) {
         System.out.println("Subscriber " + id + " (" + name + ") received event: " + event);
     }
-
+    // this is to apply the filter
+    // if no filter is added then it will allow everything
     @Override
     public boolean isInterestedIn(T event) {
         if (filter == null) {

@@ -31,6 +31,7 @@ public class EventPublisher implements Publisher {
     }
 
     private EventPublisher() {}
+    // this function to add a new subscriber , it is also thread safe the same thing for unsubbscribe
     @Override
     public synchronized void subscribe(Subscriber<? extends Event> subscriber) {
         @SuppressWarnings("unchecked")
@@ -58,7 +59,8 @@ public class EventPublisher implements Publisher {
     public synchronized  void clearHistory(){
         eventHistory.clear();
     }
-
+    // in this function that implement observer pattern the publisher will loop for each subsciber then
+    // check if this event is allowed for him or not , it also log what happens
     @Override
     public synchronized void publish(Event event) {
 
@@ -82,12 +84,14 @@ public class EventPublisher implements Publisher {
     public List<LoggedEvent> getEventHistory() {
         return eventHistory;
     }
+    // to get logged events in any time period
     public List<LoggedEvent> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
 
         return  eventHistory.stream()
                 .filter(log-> !log.getEvent().getTimestamp().isBefore(start) && !log.getEvent().getTimestamp().isAfter(end))
                 .collect(Collectors.toList());
     }
+    // get logged by type
     public List<LoggedEvent> getEventByType(EventType eventType) {
         return eventHistory.stream()
                 .filter(Log -> Log.getEvent().getType() == eventType)
