@@ -1,6 +1,7 @@
 package org.example.publisher;
 
 
+import org.example.History.HistoryManager;
 import org.example.events.Event;
 import org.example.events.EventType;
 import org.example.subscribers.Subscriber;
@@ -18,8 +19,8 @@ public class EventPublisher implements Publisher {
 
     private static final EventPublisher instance = new EventPublisher();
     private final List<Subscriber<Event>> subscribers = new ArrayList<>();
-    private final List<LoggedEvent> eventHistory = new CopyOnWriteArrayList<>(); //this is a safe list to store
-    //history in a threading enviroment
+    private final HistoryManager historyManager = new HistoryManager();
+
     private static final Logger logger = Logger.getLogger(EventPublisher.class.getName());
     // to add real logging instead of prints
     // made into singeltoon pattern because we only need one publisher also for thread safety
@@ -58,7 +59,7 @@ public class EventPublisher implements Publisher {
         return subscribers.size();
     }
     public synchronized  void clearHistory(){
-        eventHistory.clear();
+        historyManager.getEventHistory().clear();
     }
     // in this function that implement observer pattern the publisher will loop for each subsciber then
     // check if this event is allowed for him or not , it also log what happens
@@ -78,30 +79,21 @@ public class EventPublisher implements Publisher {
         }
 
         LoggedEvent loggedEvent = new LoggedEvent(event, notifiedSubscribers);
-        eventHistory.add(loggedEvent);
+        historyManager.recordEvent(loggedEvent);
 
         logger.info("Event published: " + event + " to " + notifiedSubscribers.size() + " subscribers");
     }
     public List<LoggedEvent> getEventHistory() {
-        return eventHistory;
+        return historyManager.getEventHistory();
     }
     // to get logged events in any time period
-    public List<LoggedEvent> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
 
-        return  eventHistory.stream()
-                .filter(log-> !log.getEvent().getTimestamp().isBefore(start) && !log.getEvent().getTimestamp().isAfter(end))
-                .collect(Collectors.toList());
+    public List<LoggedEvent> getEventsFromBetween(LocalDateTime start, LocalDateTime end) {
+        return historyManager.getEventsFromBetween(start, end);
     }
-    // get logged by type
+
     public List<LoggedEvent> getEventByType(EventType eventType) {
-        return eventHistory.stream()
-                .filter(Log -> Log.getEvent().getType() == eventType)
-                .collect(Collectors.toList());
-    }
-    public void printHistory() {
-        for (LoggedEvent event : eventHistory) {
-            System.out.println(event);
-        }
+        return historyManager.getEventByType(eventType);
     }
 
 }
