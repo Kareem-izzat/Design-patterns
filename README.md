@@ -48,6 +48,8 @@ This system serves as a model for real-life notification systems (e.g., Google C
 
 4. **Strategy**  
    Enables dynamic filtering logic for subscribers
+5. **SOLID**
+   SOLID rulese where followed to ensure a clean code Design
 
 ---
 
