@@ -30,6 +30,8 @@ This system serves as a model for real-life notification systems (e.g., Google C
 
 - **EventFilter Interface**  
   An abstraction for implementing custom event filters using a `matches()` method.
+- **HistoryManager**
+  Collect history for scheduled events and give access for them
 
 ---
 
@@ -45,7 +47,7 @@ This system serves as a model for real-life notification systems (e.g., Google C
    Ensures a single instance of the `EventPublisher`.
 
 4. **Strategy**  
-   Enables dynamic handling of various event filtering strategies.
+   Enables dynamic filtering logic for subscribers
 
 ---
 
@@ -55,7 +57,7 @@ This system serves as a model for real-life notification systems (e.g., Google C
 2. Subscribers register and define filters for events of interest.  
 3. Publisher schedules and dispatches events through the `EventScheduler`.  
 4. Every dispatched event is logged and saved in event history for later analysis.
-
+5. published events are logged automatically, including Event details and Which subscribers were notified
 ---
 
 ##  How to Run
