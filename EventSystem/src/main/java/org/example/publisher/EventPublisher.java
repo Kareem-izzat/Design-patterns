@@ -9,9 +9,8 @@ import org.example.subscribers.Subscriber;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.logging.Logger;
 
 
@@ -64,9 +63,9 @@ public class EventPublisher implements Publisher {
     // in this function that implement observer pattern the publisher will loop for each subsciber then
     // check if this event is allowed for him or not , it also log what happens
     @Override
-    public synchronized void publish(Event event) {
+    public  void publish(Event event) {
 
-        List<Subscriber<Event>> notifiedSubscribers = new ArrayList<>();
+        List<Subscriber<Event>> notifiedSubscribers = new CopyOnWriteArrayList<>();
         if (!subscribers.isEmpty()) {
             for (Subscriber<Event> subscriber : subscribers) {
                 if (subscriber.isInterestedIn(event)) {

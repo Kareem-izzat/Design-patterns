@@ -10,6 +10,7 @@ import org.example.publisher.*;
 import java.time.LocalDateTime;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -56,14 +57,16 @@ public class Main {
         scheduler.schedule(reminderEvent);
 
 
-
         try {
             Thread.sleep(20000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
+
         scheduler.shutdown();
+
+
 
         System.out.println("\nEvent scheduling test finished.");
     }
