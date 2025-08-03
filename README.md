@@ -72,8 +72,8 @@ This system serves as a model for real-life notification systems (e.g., Google C
 ###  Build and Run
 
 ```bash
-git clone https://github.com/yourusername/event-notification-system.git
-cd event-notification-system
+git clone https://github.com/Kareem-izzat/Design-patterns.git
+cd Design-patterns
 mvn compile
 ```
 
