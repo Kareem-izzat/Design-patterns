@@ -73,7 +73,7 @@ This system serves as a model for real-life notification systems (e.g., Google C
 
 ```bash
 git clone https://github.com/Kareem-izzat/Design-patterns.git
-cd event-notification-system
+cd Design-patterns
 mvn compile
 ```
 
